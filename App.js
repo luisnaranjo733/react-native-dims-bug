@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, StatusBar, Dimensions, Platform, Alert } from 'react-native';
+import React from "react";
+import { Text, View, StyleSheet, StatusBar, Dimensions, Alert, useWindowDimensions } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 
@@ -27,6 +27,11 @@ const styles = StyleSheet.create({
     padding: 10
   }
 });
+
+const HooksDimensions = () => {
+  const { width, height } = useWindowDimensions();
+  return <Text style={styles.paragraph}>{`Hooks: width=${width} height=${height}`}</Text>
+}
 
 
 
@@ -99,8 +104,9 @@ export default class App extends React.PureComponent {
     let {width, height, wb} = this.state;
 
     return (
-        <TouchableOpacity style={styles.container}>
-          <Text style={styles.paragraph}>{`test: width=${width} height=${height}`}</Text>
+        <View style={styles.container}>
+          <Text style={styles.paragraph}>{`Class: width=${width} height=${height}`}</Text>
+          <HooksDimensions />
           {wb ?
             <WebView
               mixedContentMode={'always'}
@@ -116,7 +122,7 @@ export default class App extends React.PureComponent {
               mediaPlaybackRequiresUserAction={false}
             />
         : null}
-        </TouchableOpacity>
+        </View>
     );
   }
 }
